@@ -1,0 +1,43 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Rejection {
+  id           String   @id @default(cuid())
+  collegeId    String
+  college      College  @relation(fields: [collegeId], references: [id])
+  dateRejected DateTime @default(now())
+  dateApplied  DateTime
+
+  image            String
+  name             String
+  description      String?
+  highSchool       String?
+  views            Int     @default(0)
+  upvotes          Int     @default(0)
+  gpa              Float
+  sat              Int?
+  act              Int?
+  classRank        Int?
+  extracurriculars String?
+  major            String?
+
+  dateCreated DateTime @default(now())
+}
+
+model College {
+  id             String      @id @default(cuid())
+  name           String      @unique
+  acceptanceRate Float?      @default(100)
+  gradRate       Float?      @default(100)
+  rejections     Rejection[]
+}

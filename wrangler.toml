@@ -1,0 +1,9 @@
+name = "college-rejections"
+compatibility_date = "2024-07-29"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "college-rejections"
+database_id = "656b6b22-6e4c-4da8-9eb6-bc340187593b"

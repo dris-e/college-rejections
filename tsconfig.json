@@ -18,8 +18,10 @@
         "name": "next"
       }
     ],
+    "types": ["./worker-configuration.d.ts"],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/prisma": ["./prisma/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
