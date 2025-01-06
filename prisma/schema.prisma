@@ -37,7 +37,7 @@ model Rejection {
 model College {
   id             String      @id @default(cuid())
   name           String      @unique
-  acceptanceRate Float?      @default(100)
-  gradRate       Float?      @default(100)
+  acceptanceRate Float?
+  gradRate       Float?
   rejections     Rejection[]
 }

@@ -3,36 +3,52 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { RejectionWithCollege } from "@/lib/utils";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useState } from "react";
 import Search from "./search";
-import College from "./college";
-import Rejection from "./rejection";
+import ViewCollege from "./college";
+import AddRejection from "./rejection";
 
-const postSchema = z.object({
-  collegeName: z.string().min(1, "Please enter a college name"),
-  dateApplied: z.date(),
-  dateRejected: z.date(),
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  description: z.string().optional(),
-  highSchool: z.string().optional(),
-  gpa: z.number().min(0).max(5),
-  sat: z.number().min(400).max(1600).optional(),
-  act: z.number().min(1).max(36).optional(),
-  classRank: z.number().positive().optional(),
-  extracurriculars: z.string().optional(),
-  major: z.string().optional(),
-});
+export type PostFormData = {
+  college?: { id: string; name: string; acceptanceRate: number | null; gradRate: number | null } | null;
+  rejection?: {
+    dateApplied: Date;
+    dateRejected: Date;
+    name: string;
+    description: string | null;
+    highSchool: string | null;
+    gpa: number;
+    sat: number | null;
+    act: number | null;
+    classRank: number | null;
+    extracurriculars: string | null;
+    major: string | null;
+  } | null;
+};
 
-const stageComponents = [<Search />, <College />, <Rejection />];
+export interface PostProps {
+  onNext?: (data: Partial<PostFormData>) => void;
+  onBack?: () => void;
+  formData: PostFormData;
+}
 
 export default function Post({ children }: { children: React.ReactNode }) {
   const [stage, setStage] = useState(0);
+  const [formData, setFormData] = useState<PostFormData>({ college: null, rejection: null });
+
+  const handleNext = (data: Partial<PostFormData>) => {
+    setFormData((prev) => ({ ...prev, ...data }));
+    setStage((prev) => (prev < 2 ? prev + 1 : prev));
+  };
+
+  const handleBack = () => {
+    setStage((prev) => (prev > 0 ? prev - 1 : prev));
+  };
+
+  const stageComponents = [
+    <Search onNext={handleNext} formData={formData} />,
+    <ViewCollege onNext={handleNext} onBack={handleBack} formData={formData} />,
+    <AddRejection onBack={handleBack} formData={formData} />,
+  ];
 
   return (
     <Dialog>

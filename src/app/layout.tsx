@@ -5,6 +5,7 @@ import "./globals.css";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Header from "@/components/header";
+import Providers from "@/components/providers";
 
 const pixelifySans = Pixelify_Sans({
   variable: "--font-pixelify-sans",
@@ -26,8 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${pixelifySans.variable} antialiased`}>
       <body className="bg-background text-foreground tracking-tight font-sans relative">
-        <Header />
-        <main className="mt-10 px-4 pb-16 sm:px-12 w-full max-w-7xl mx-auto">{children}</main>
+        <Providers>
+          <Header />
+          <main className="mt-10 px-4 pb-16 sm:px-12 w-full max-w-7xl mx-auto">{children}</main>
+        </Providers>
       </body>
     </html>
   );

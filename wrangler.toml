@@ -7,3 +7,10 @@ pages_build_output_dir = ".vercel/output/static"
 binding = "DB"
 database_name = "college-rejections"
 database_id = "656b6b22-6e4c-4da8-9eb6-bc340187593b"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "college-rejections"
+
+[vars]
+PUBLIC_BUCKET_URL = "https://pub-2fde440084bf4d87bd288973a33730e5.r2.dev"

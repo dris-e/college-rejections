@@ -9,6 +9,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Post from "./post/post";
+import { useRejections } from "@/contexts/rejection";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 const searchSchema = z.object({
   search: z
@@ -22,15 +25,24 @@ const searchSchema = z.object({
 });
 
 export default function Header() {
+  const { search, setSearch } = useRejections();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof searchSchema>>({
     resolver: zodResolver(searchSchema),
     defaultValues: {
-      search: "",
+      search: searchParams.get("search") || "",
     },
   });
 
+  useEffect(() => {
+    form.setValue("search", search);
+  }, [search, form]);
+
   function onSearch(values: z.infer<typeof searchSchema>) {
-    console.log(values);
+    setSearch(values.search);
+    router.push(`/?search=${values.search}&sort=${searchParams.get("sort") ?? "popularity"}`);
   }
 
   return (

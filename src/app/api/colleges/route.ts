@@ -2,7 +2,10 @@ import { NextResponse, NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { PrismaD1 } from "@prisma/adapter-d1";
 import { getRequestContext } from "@cloudflare/next-on-pages";
-import { collegeSchema } from "@/types";
+import { z } from "zod";
+import { createCollegeSchema } from "@/types/college";
+
+export const runtime = "edge";
 
 export async function POST(req: NextRequest) {
   const { env } = getRequestContext();
@@ -10,26 +13,44 @@ export async function POST(req: NextRequest) {
   const prisma = new PrismaClient({ adapter });
 
   const data = await req.json();
-  const parsedData = collegeSchema.parse(data);
+  const parsedData = createCollegeSchema.parse(data);
 
   try {
-    const college = await prisma.college.upsert({
-      where: {
-        name: parsedData.name,
-      },
-      update: {
-        acceptanceRate: parsedData.acceptanceRate,
-        gradRate: parsedData.gradRate,
-      },
-      create: {
-        name: parsedData.name,
-        acceptanceRate: parsedData.acceptanceRate,
-        gradRate: parsedData.gradRate,
-      },
+    const existingCollege = await prisma.college.findFirst({
+      where: { name: parsedData.name },
     });
 
-    return NextResponse.json(college);
+    if (existingCollege) {
+      const newAcceptanceRate =
+        existingCollege.acceptanceRate !== null ? (existingCollege.acceptanceRate + (parsedData.acceptanceRate || 0)) / 2 : parsedData.acceptanceRate;
+
+      const newGradRate = existingCollege.gradRate !== null ? (existingCollege.gradRate + (parsedData.gradRate || 0)) / 2 : parsedData.gradRate;
+
+      return NextResponse.json(
+        await prisma.college.update({
+          where: { id: existingCollege.id },
+          data: {
+            acceptanceRate: newAcceptanceRate,
+            gradRate: newGradRate,
+          },
+        })
+      );
+    }
+
+    return NextResponse.json(
+      await prisma.college.create({
+        data: {
+          name: parsedData.name,
+          acceptanceRate: parsedData.acceptanceRate || null,
+          gradRate: parsedData.gradRate || null,
+        },
+      })
+    );
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+
     return NextResponse.json({ error: "Failed to find or create college" }, { status: 500 });
   }
 }
@@ -52,6 +73,10 @@ export async function GET(req: NextRequest) {
         name: "asc",
       },
     });
+
+    if (colleges.length === 0) {
+      return NextResponse.json({ error: "No colleges found" }, { status: 404 });
+    }
 
     return NextResponse.json(colleges);
   } catch (error) {

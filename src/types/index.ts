@@ -1,4 +1,4 @@
-import { rejectionSchema } from "./rejection";
+import { rejectionSchema, updateSchema, createRejectionSchema } from "./rejection";
 import { collegeSchema } from "./college";
 
-export { rejectionSchema, collegeSchema };
+export { rejectionSchema, updateSchema, createRejectionSchema, collegeSchema };
