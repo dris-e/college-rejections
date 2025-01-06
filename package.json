@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "pages:build": "npx @cloudflare/next-on-pages",
+    "pages:build": "npx prisma generate && npx @cloudflare/next-on-pages",
     "preview": "npm run pages:build && wrangler pages dev",
     "deploy": "npm run pages:build && wrangler pages deploy",
     "list": "wrangler d1 migrations list college-rejections --remote",
@@ -83,9 +83,7 @@
     "postcss": "^8",
     "prisma": "^6.1.0",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
-  },
-  "engines": {
-    "node": "^20.0.0"
+    "typescript": "^5",
+    "vercel": "39.1.1"
   }
 }
