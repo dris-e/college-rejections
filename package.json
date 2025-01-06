@@ -14,8 +14,8 @@
     "list:local": "wrangler d1 migrations list college-rejections --local",
     "apply": "wrangler d1 migrations apply college-rejections --remote",
     "apply:local": "wrangler d1 migrations apply college-rejections --local",
-    "generate": "npx wrangler d1 migrations create college-rejections first_migration",
-    "update": "npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script --output migrations/0001_first_migration.sql"
+    "generate": "npx wrangler d1 migrations create college-rejections update_migration",
+    "update": "npx prisma migrate diff --from-local-d1 --to-schema-datamodel ./prisma/schema.prisma --script --output migrations/0002_update_migration.sql"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

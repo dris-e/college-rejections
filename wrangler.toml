@@ -13,4 +13,4 @@ binding = "BUCKET"
 bucket_name = "college-rejections"
 
 [vars]
-PUBLIC_BUCKET_URL = "https://pub-2fde440084bf4d87bd288973a33730e5.r2.dev"
+PUBLIC_BUCKET_URL = "cdn.collegerejections.com"
