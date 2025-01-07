@@ -26,7 +26,7 @@ npm run deploy
 ## To Do
 
 - [ ] fix readme
-  - [ ] add image
+  - [x] add image
 - [x] license
 - [x] better image viewer
 - [x] add meta tags & images
