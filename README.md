@@ -1,6 +1,20 @@
 ## CollegeRejections.com
 
-Open source platform to post your college rejections (collegerejections.com[collegerejections.com]).
+Open source platform to post your college rejections [collegerejections.com](https://collegerejections.com)
+
+## Run
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+```
+
+Add your own DB & Bucket w/Cloudflare (update wrangler.toml)
+
+## To Do
 
 - [ ] fix readme
 - [ ] add meta tags & images
