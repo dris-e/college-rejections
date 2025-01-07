@@ -13,6 +13,9 @@ const pixelifySans = Pixelify_Sans({
 export const metadata: Metadata = {
   title: "CollegeRejections.com",
   description: "the #2 best site to post your college rejections",
+  keywords: ["college rejections", "college rejection", "college rejection letter", "college rejection letters", "college rejection letters 2024", "college rejection letters 2025", "college rejection letters 2026", "college rejection letters 2027", "college rejection letters 2028", "college rejection letters 2029", "college rejection letters 2030"],
+  robots: "index, follow",
+  metadataBase: new URL("https://collegerejections.com"),
   openGraph: {
     title: "CollegeRejections.com",
     description: "the #2 best site to post your college rejections",

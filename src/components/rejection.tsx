@@ -86,7 +86,7 @@ export function Rejection({ rejection, standalone = false }: { rejection: Reject
     }
   }, [rejection.id, hasViewed, addView, viewProcessed]);
 
-  console.log(rejection);
+  // console.log(rejection);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
