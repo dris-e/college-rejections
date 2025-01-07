@@ -11,8 +11,11 @@ import { PostProps } from "./post";
 import { College } from "@prisma/client";
 import { createCollegeSchema } from "@/types/college";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function ViewCollege({ onNext, onBack, formData }: PostProps) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof createCollegeSchema>>({
     resolver: zodResolver(createCollegeSchema),
     defaultValues: {
@@ -23,19 +26,26 @@ export default function ViewCollege({ onNext, onBack, formData }: PostProps) {
   });
 
   async function onSubmit(values: z.infer<typeof createCollegeSchema>) {
-    const res = await fetch("/api/colleges", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: values.name,
-        acceptanceRate: values.acceptanceRate || null,
-        gradRate: values.gradRate || null,
-      }),
-    });
-    const college = (await res.json()) as College;
-    onNext?.({ college });
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/colleges", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: values.name,
+          acceptanceRate: values.acceptanceRate || null,
+          gradRate: values.gradRate || null,
+        }),
+      });
+      const college = (await res.json()) as College;
+      onNext?.({ college });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -92,7 +102,7 @@ export default function ViewCollege({ onNext, onBack, formData }: PostProps) {
           <Button type="button" variant="outline" onClick={onBack}>
             Back
           </Button>
-          <Button type="submit" variant="action">
+          <Button type="submit" variant="action" disabled={isLoading}>
             <CheckIcon className="h-4 w-4" />
             {formData.college?.name ? "Select College" : "Add College"}
           </Button>

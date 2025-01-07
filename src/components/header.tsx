@@ -21,7 +21,7 @@ const searchSchema = z.object({
     })
     .max(50, {
       message: "Search must be less than 50 characters.",
-    }),
+    })
 });
 
 export default function Header() {
@@ -47,21 +47,21 @@ export default function Header() {
 
   return (
     <Link href="/">
-      <header className="flex flex-row w-full justify-between items-start gap-4 overflow-hidden p-4">
+      <header className="flex flex-col md:flex-row w-full justify-between items-center md:items-start gap-5 md:gap-4 mt-2 md:mt-0 overflow-hidden p-4">
         <div className="flex justify-center items-center gap-2.5">
           <Image src="assets/cr-icon.svg" alt="CollegeRejections.com logo" width={48} height={48} />
           <h1 className="text-2xl font-bold">CollegeRejections.com</h1>
         </div>
-        <div className="flex justify-center items-start gap-3">
+        <div className="flex justify-center items-center gap-3 w-full md:w-auto">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSearch)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSearch)} className="space-y-8 w-full md:w-auto">
               <FormField
                 control={form.control}
                 name="search"
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Search for colleges..." className="w-full max-w-xs" {...field} />
+                      <Input placeholder="Search for colleges..." className="w-full md:max-w-xs" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

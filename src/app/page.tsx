@@ -71,9 +71,9 @@ export default function Home({ children }: { children?: React.ReactNode }) {
 
   return (
     <div className="flex flex-col gap-8 justify-start items-center w-full">
-      <div className="flex flex-row w-full justify-between items-center">
+      <div className="flex gap-4 flex-col md:flex-row w-full justify-between items-center">
         <Select value={sort} onValueChange={handleSort}>
-          <SelectTrigger className="w-40">
+          <SelectTrigger className="w-full md:w-40">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
           <SelectContent>
@@ -83,7 +83,7 @@ export default function Home({ children }: { children?: React.ReactNode }) {
             <SelectItem value="views">👀 Most Viewed</SelectItem>
           </SelectContent>
         </Select>
-        <h2 className="text-md text-muted-foreground font-bold">
+        <h2 className="text-sm md:text-md text-center md:text-right text-muted-foreground font-bold">
           Sorting by {sort} (showing {data?.pages[0]?.rejections?.length} of {data?.pages[0]?.total})
         </h2>
       </div>

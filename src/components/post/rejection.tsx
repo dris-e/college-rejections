@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 
 export default function AddRejection({ onBack, formData }: PostProps) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [optionalVisible, setOptionalVisible] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof createRejectionSchema>>({
@@ -39,6 +40,8 @@ export default function AddRejection({ onBack, formData }: PostProps) {
 
   async function onSubmit(values: z.infer<typeof createRejectionSchema>) {
     try {
+      setIsLoading(true);
+
       const formData = new FormData();
 
       if (values.image) {
@@ -57,6 +60,8 @@ export default function AddRejection({ onBack, formData }: PostProps) {
       router.push(`/${rejection.id}`);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -104,7 +109,12 @@ export default function AddRejection({ onBack, formData }: PostProps) {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea {...field} value={field.value || ""} placeholder={`Explain how you thought you'd get accepted...`} className="min-h-[48px]" />
+                <Textarea
+                  {...field}
+                  value={field.value || ""}
+                  placeholder={`Explain how you thought you'd get accepted...`}
+                  className="min-h-[48px]"
+                />
               </FormControl>
               <FormDescription>Optional</FormDescription>
               <FormMessage />
@@ -236,7 +246,7 @@ export default function AddRejection({ onBack, formData }: PostProps) {
             <Button type="button" variant="outline" onClick={onBack}>
               Back
             </Button>
-            <Button type="submit" variant="action">
+            <Button type="submit" variant="action" disabled={isLoading}>
               Post Rejection
             </Button>
           </div>

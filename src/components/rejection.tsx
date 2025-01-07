@@ -16,7 +16,7 @@ import { useSearchParams } from "next/navigation";
 import { useRejections } from "@/contexts/rejection";
 import { useRouter } from "next/navigation";
 import { useCookie } from "@/contexts/cookie";
-
+import Link from "next/link";
 const tags = [
   {
     name: "High School",
@@ -94,7 +94,12 @@ export function Rejection({ rejection, standalone = false }: { rejection: Reject
         <Card className="flex flex-col gap-2 justify-start items-start w-full sm:w-64 h-64 cursor-pointer hover:shadow-md transition-all duration-300">
           <div className="w-full h-full overflow-hidden relative p-4 border-rounded-lg">
             <AspectRatio ratio={1}>
-              <Image src={rejection.image} alt={rejection.college.name} fill className="object-cover" />
+              <Image
+                src={`https://${rejection.image}`}
+                alt={`${rejection.name}'s rejection for ${rejection.college.name}`}
+                fill
+                className="object-cover"
+              />
             </AspectRatio>
           </div>
           <CardHeader className="relative w-full p-4 py-2 pb-4">
@@ -118,9 +123,19 @@ export function Rejection({ rejection, standalone = false }: { rejection: Reject
             Applied {new Date(rejection.dateApplied).toLocaleDateString()}, Rejected {new Date(rejection.dateRejected).toLocaleDateString()}
           </DialogDescription>
         </DialogHeader>
-        <div className="w-full overflow-hidden relative">
-          <AspectRatio ratio={4 / 3}>
-            <Image src={rejection.image} alt={rejection.college.name} fill className="object-cover" />
+        <div className="w-full group flex justify-center items-center overflow-hidden relative">
+          <Badge variant="action" className="z-10 group-hover:opacity-100 opacity-0 absolute transition-all duration-300">
+            <Link href={`https://${rejection.image}`} target="_blank">
+              View Rejection
+            </Link>
+          </Badge>
+          <AspectRatio ratio={4 / 3} onClick={() => window.open(`https://${rejection.image}`, "_blank")}>
+            <Image
+              src={`https://${rejection.image}`}
+              alt={`${rejection.name}'s rejection for ${rejection.college.name}`}
+              fill
+              className="object-cover cursor-pointer"
+            />
           </AspectRatio>
         </div>
         <div className="flex flex-col gap-4 mb-2">

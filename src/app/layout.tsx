@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Pixelify_Sans } from "next/font/google";
-import Image from "next/image";
 import "./globals.css";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import Providers from "@/components/providers";
 
 const pixelifySans = Pixelify_Sans({
@@ -14,7 +12,7 @@ const pixelifySans = Pixelify_Sans({
 
 export const metadata: Metadata = {
   title: "CollegeRejections.com",
-  description: "site to post your harvard college rejections",
+  description: "the #2 best site to post your college rejections",
 };
 
 export const runtime = "edge";
@@ -26,10 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${pixelifySans.variable} antialiased`}>
-      <body className="bg-background text-foreground tracking-tight font-sans relative">
+      <body className="bg-background text-foreground tracking-tight font-sans relative min-h-screen">
         <Providers>
           <Header />
-          <main className="mt-10 px-4 pb-16 sm:px-12 w-full max-w-7xl mx-auto">{children}</main>
+          <main className="-mt-1 md:mt-10 px-4 pb-16 sm:px-12 w-full max-w-7xl mx-auto">{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>
