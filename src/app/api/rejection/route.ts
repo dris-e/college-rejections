@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
   const parsedData = createRejectionSchema.parse(data);
 
   try {
-    const imageKey = `rejections/${crypto.randomUUID()}-${image.name}`;
+    const imageKey = `rejections/${crypto.randomUUID()}`;
     await env.BUCKET.put(imageKey, image);
     const imageUrl = `${env.PUBLIC_BUCKET_URL}/${imageKey}`;
 
