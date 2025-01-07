@@ -17,6 +17,8 @@ export function Controls({ rejection, type }: { rejection: RejectionWithCollege;
   };
 
   const handleShare = async () => {
+    await navigator.clipboard.writeText(`${window.location.origin}/${rejection.id}`);
+    
     if (navigator.share) {
       try {
         await navigator.share({
@@ -27,8 +29,6 @@ export function Controls({ rejection, type }: { rejection: RejectionWithCollege;
       } catch (err) {
         console.error("Share failed:", err);
       }
-    } else {
-      await navigator.clipboard.writeText(`${window.location.origin}/${rejection.id}`);
     }
   };
 

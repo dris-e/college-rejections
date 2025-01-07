@@ -41,8 +41,8 @@ export async function POST(req: NextRequest) {
       await prisma.college.create({
         data: {
           name: parsedData.name,
-          acceptanceRate: parsedData.acceptanceRate || null,
-          gradRate: parsedData.gradRate || null,
+          acceptanceRate: parsedData.acceptanceRate || 100,
+          gradRate: parsedData.gradRate || 100,
         },
       })
     );

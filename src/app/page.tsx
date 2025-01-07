@@ -45,7 +45,7 @@ export default function Home({ children }: { children?: React.ReactNode }) {
   //   refetchOnWindowFocus: false,
   // });
 
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery<RejectionResponse>({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery<RejectionResponse>({
     queryKey: ["rejections", { sort, page, search }],
     queryFn: async ({ pageParam = 1 }) => {
       const params = new URLSearchParams({ sort, page: String(page), search });
@@ -53,7 +53,11 @@ export default function Home({ children }: { children?: React.ReactNode }) {
       if (!res.ok) throw new Error("Failed to fetch");
       return res.json();
     },
-    getNextPageParam: (lastPage) => (lastPage.pages > lastPage.page ? lastPage.page + 1 : undefined),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.rejections.length === 0) return undefined;
+      if (lastPage.page >= lastPage.pages) return undefined;
+      return lastPage.page + 1;
+    },
     initialPageParam: 1,
     staleTime: 1000 * 60,
     refetchOnWindowFocus: false,
@@ -91,6 +95,11 @@ export default function Home({ children }: { children?: React.ReactNode }) {
           <Rejection key={rejection.id} rejection={rejection} />
         ))}
       </div>
+      {hasNextPage && (
+        <div ref={ref} className="h-10">
+          {isFetchingNextPage ? "Loading..." : ""}
+        </div>
+      )}
     </div>
   );
 }
