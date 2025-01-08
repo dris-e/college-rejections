@@ -16,6 +16,10 @@ npm run dev
 
 Add your own DB & Bucket w/Cloudflare (update wrangler.toml)
 
+## Contributing
+
+Fork the repo & submit PR. Maybe.
+
 ## Deploy
 
 ```bash
@@ -36,6 +40,8 @@ npm run deploy
 - [ ] add more colleges
 - [x] footer
 - [x] loading states
+- [ ] fix eslint
+- [x] fix scroll on mobile
 - [ ] marketing
 - [ ] get 10m of vc funding
 - [ ] make billion dollar crypto currency

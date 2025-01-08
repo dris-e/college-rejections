@@ -114,7 +114,7 @@ export function Rejection({ rejection, standalone = false }: { rejection: Reject
           </CardHeader>
         </Card>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-sm">
+      <DialogContent className="sm:max-w-sm md:max-h-full max-h-[100dvh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="cursor-pointer" onClick={() => handleTagClick(rejection.college.name)}>
             {rejection.college.name}

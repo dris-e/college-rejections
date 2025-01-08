@@ -13,7 +13,23 @@ const pixelifySans = Pixelify_Sans({
 export const metadata: Metadata = {
   title: "CollegeRejections.com",
   description: "the #2 best site to post your college rejections",
-  keywords: ["college rejections", "college rejection", "college rejection letter", "college rejection letters", "college rejection letters 2024", "college rejection letters 2025", "college rejection letters 2026", "college rejection letters 2027", "college rejection letters 2028", "college rejection letters 2029", "college rejection letters 2030"],
+  keywords: [
+    "college rejections",
+    "college rejection",
+    "college rejection letter",
+    "college rejection letters",
+    "harvard rejection",
+    "harvard rejection letter",
+    "mit rejection",
+    "mit rejection letter",
+    "college rejection letters 2024",
+    "college rejection letters 2025",
+    "college rejection letters 2026",
+    "college rejection letters 2027",
+    "college rejection letters 2028",
+    "college rejection letters 2029",
+    "college rejection letters 2030",
+  ],
   robots: "index, follow",
   metadataBase: new URL("https://collegerejections.com"),
   openGraph: {
@@ -21,7 +37,7 @@ export const metadata: Metadata = {
     description: "the #2 best site to post your college rejections",
     images: [
       {
-        url: "/assets/college-rejections.jpg",
+        url: "/assets/college-rejections-og.png",
         width: 1200,
         height: 630,
         alt: "CollegeRejections.com",
@@ -33,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CollegeRejections.com",
     description: "the #2 best site to post your college rejections",
-    images: ["/assets/college-rejections.jpg"],
+    images: ["/assets/college-rejections-og.png"],
   },
 };
 
